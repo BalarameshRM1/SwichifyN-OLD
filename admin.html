@@ -613,12 +613,12 @@ body.dark .modal .mw {
    ------------------------- */
 const state = {
   user: null, // {name,email,role,avatar}
-  products: [
-    {id:1,title:'Leather Jacket',price:120,stock:24,category:'Clothing',img:'https://picsum.photos/seed/p1/80'},
-    {id:2,title:'Smart Watch',price:85,stock:50,category:'Electronics',img:'https://picsum.photos/seed/p2/80'},
-    {id:3,title:'Running Sneakers',price:65,stock:12,category:'Footwear',img:'https://picsum.photos/seed/p3/80'},
-    {id:4,title:'Wireless Headphones',price:99,stock:30,category:'Electronics',img:'https://picsum.photos/seed/p4/80'},
-  ],
+ products: [
+    { id: 1, title: 'Leather Jacket', price: 120, stock: 24, category: 'Clothing', img: './Assets/leather jacket.jpg' },
+    { id: 2, title: 'Smart Watch', price: 85, stock: 50, category: 'Electronics', img: './Assets/electronics.jpg' },
+    { id: 3, title: 'Running Sneakers', price: 65, stock: 12, category: 'Footwear', img: './Assets/leather-shoes-wooden-background.jpg' },
+    { id: 4, title: 'Wireless Headphones', price: 99, stock: 30, category: 'Electronics', img: './Assets/electronics.jpg' },
+],
   orders: [
     {id:1001,customer:'John Doe',date:'2025-10-03',total:250,status:'Completed',items:3},
     {id:1002,customer:'Emma Watson',date:'2025-10-04',total:520,status:'Pending',items:5},
@@ -745,7 +745,7 @@ function renderCustomers(){
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td style="display:flex;align-items:center">
-        <img class="avatar" src="https://i.pravatar.cc/seed/${encodeURIComponent(c.email)}/60" />
+        <img class="avatar" src="./Assets/Latest/men.jpg" />
         <div>
           <div style="font-weight:700">${c.name}</div>
           <div class="small">${c.email}</div>
