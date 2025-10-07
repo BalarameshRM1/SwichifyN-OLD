@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | RM1 Coders</title>
+
+  <style>
+    /* Background */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #334d6a, #0062ff);
+    }
+
+    /* Glass Effect Box */
+    .login-container {
+      width: 380px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 40px 30px;
+      color: white;
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-container h2 {
+      font-size: 26px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .login-container p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 30px;
+    }
+
+    /* Input fields */
+    .input-field {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-field input {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      transition: 0.3s;
+    }
+
+    .input-field input::placeholder {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .input-field input:focus {
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4);
+    }
+
+    /* Button */
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, #0072ff, #00c6ff);
+    }
+
+    /* Error message */
+    .error {
+      color: #ffbaba;
+      font-size: 13px;
+      margin-top: 10px;
+      min-height: 18px;
+    }
+
+    /* Footer text */
+    .footer {
+      margin-top: 25px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .footer span {
+      color: #fff;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <img src="./SWACHIFY.gif" style="height: 100px; width: 100px;"/>
+    <h2>Welcome Back 👋</h2>
+    <p>Login to continue to your dashboard</p>
+
+    <div class="input-field">
+      <input type="text" id="username" placeholder="Enter Username" required />
+    </div>
+
+    <div class="input-field">
+      <input type="password" id="password" placeholder="Enter Password" required />
+    </div>
+
+    <div id="loader-container" style="display:none; margin:20px 0;">
+  <img src="4717d0e2-354e-442f-bfb7-c2db3814e3c4.gif" alt="Loading..." width="80" height="80" />
+</div>
+
+    <button class="login-btn" onclick="login()">Login</button>
+
+    <div class="error" id="error"></div>
+
+    <div class="footer">Developed by <span>RM1 Coders</span></div>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorDiv = document.getElementById("error");
+
+      const users = [
+        { username: "admin", password: "admin123", role: "admin" },
+        { username: "user", password: "user123", role: "user" }
+      ];
+
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        errorDiv.textContent = "";
+        document.querySelector(".login-btn").textContent = "Logging in...";
+        setTimeout(() => {
+          if (user.role === "admin") {
+            window.location.href = "admin.html";
+          } else {
+            window.location.href = "user.html";
+          }
+        }, 1000);
+      } else {
+        errorDiv.textContent = "❌ Invalid username or password!";
+      }
+    }
+  </script>
+
+</body>
+</html>

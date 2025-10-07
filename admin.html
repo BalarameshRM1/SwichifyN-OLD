@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ShopAdmin — Static Demo</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #f4f7fb;
+    --card: #ffffff;
+    --muted: #6b7280;
+    --accent: #2563eb;
+    --accent-2: #0ea5e9;
+    --border: #e6edf6;
+    --danger: #ef4444;
+    --success: #10b981;
+    --glass: rgba(255,255,255,0.7);
+  }
+ body.dark {
+  --bg: #1f2937;
+  --card: #111827;
+  --muted: #9ca3af;
+  --accent: #3b82f6;
+  --accent-2: #60a5fa;
+  --border: #374151;
+  --danger: #f87171;
+  --success: #34d399;
+  --glass: rgba(17,24,39,0.7);
+  color: #f3f4f6;
+  background: linear-gradient(180deg, #111827 0%, #1f2937 100%);
+}
+
+body.dark .sidebar {
+  background: linear-gradient(180deg, #111827, #1f2937);
+  border-right: 1px solid var(--border);
+}
+
+body.dark .sidebar .nav a {
+  color: #d1d5db;
+}
+
+body.dark .sidebar .nav a.active {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--accent);
+}
+
+body.dark .card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+body.dark table th,
+body.dark table td {
+  color: #d1d5db;
+  border-bottom: 1px solid var(--border);
+}
+
+body.dark .topbar,
+body.dark .search,
+body.dark .icon-btn,
+body.dark .profile {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: #f3f4f6;
+}
+
+body.dark .auth-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+body.dark input.input {
+  background: #1f2937;
+  border: 1px solid var(--border);
+  color: #f3f4f6;
+}
+
+body.dark button.btn {
+  background: var(--accent);
+  color: white;
+}
+
+body.dark button.btn.ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+body.dark .modal .mw {
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, #f6f9ff 0%, var(--bg) 100%);
+    color:#111827;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  /* Layout */
+  .app{
+    display:flex;
+    min-height:100vh;
+  }
+  /* Sidebar */
+  .sidebar{
+    width:260px;
+    background:linear-gradient(180deg,var(--card),#f8fbff);
+    border-right:1px solid var(--border);
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .brand{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    font-weight:700;
+    color:var(--accent);
+    font-size:18px;
+  }
+  .brand .logo{
+    width:44px;height:44px;border-radius:10px;
+    /* background:linear-gradient(135deg,var(--accent),var(--accent-2)); */
+    background-image: url("./SWACHIFY.gif");
+    background-size: cover;
+    display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
+    box-shadow:0 6px 18px rgba(37,99,235,0.14);
+    height: 80px;
+    width: 80px;
+  }
+  nav.nav{
+    display:flex;flex-direction:column;gap:6px;margin-top:8px;
+  }
+  .nav a{
+    display:flex;gap:12px;align-items:center;padding:10px;border-radius:10px;
+    text-decoration:none;color:#334155;font-weight:600;font-size:14px;
+    transition:all .18s;
+  }
+  .nav a .ico{
+    width:36px;height:36;border-radius:8px;display:flex;align-items:center;justify-content:center;
+    background:transparent;color:var(--muted);font-weight:700;
+  }
+  .nav a:hover{background:#f1f5ff;color:var(--accent)}
+  .nav a.active{background:linear-gradient(90deg, rgba(37,99,235,0.08), rgba(14,165,233,0.04)); color:var(--accent)}
+  .nav .small{font-size:12px;color:var(--muted);font-weight:500;padding-left:4px;margin-top:8px}
+
+  .sidebar .bottom{
+    margin-top:auto;
+  }
+  .toggle-btn{
+    display:none;
+    background:transparent;border:none;color:var(--muted);font-weight:700;
+    cursor:pointer;padding:8px;border-radius:8px;
+  }
+
+  /* Main area */
+  .main{
+    flex:1;
+    padding:20px 28px;
+  }
+  .topbar{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px;
+  }
+  .search{
+    display:flex;align-items:center;gap:10px;background:var(--card);padding:10px;border-radius:12px;width:100%;
+    box-shadow:0 1px 2px rgba(16,24,40,0.04);border:1px solid var(--border);
+  }
+  .search input{border:none;outline:none;background:transparent;font-size:14px;width:100%}
+  .top-actions{display:flex;align-items:center;gap:12px}
+  .icon-btn{background:var(--card);padding:10px;border-radius:10px;border:1px solid var(--border);cursor:pointer}
+  .profile{
+    background:var(--card);padding:6px 10px;border-radius:999px;display:flex;align-items:center;gap:10px;border:1px solid var(--border);
+  }
+  .profile img{width:36px;height:36;border-radius:50%;object-fit:cover}
+
+  /* Content grid */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    gap:18px;
+  }
+  .card{
+    background:var(--card);padding:16px;border-radius:12px;border:1px solid var(--border);
+    box-shadow:0 6px 18px rgba(2,6,23,0.02);
+  }
+
+  /* Stats cards */
+  .stats{grid-column:span 12;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
+  .stat{
+    padding:18px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);
+  }
+  .stat h4{font-size:13px;color:var(--muted);margin-bottom:8px}
+  .stat strong{font-size:20px;color:var(--accent)}
+
+  /* Recent orders table */
+  .table-wrap{overflow:auto}
+  table{width:100%;border-collapse:collapse;min-width:720px}
+  th,td{padding:12px 14px;text-align:left;border-bottom:1px solid #f3f6fb;font-size:14px;color:#334155}
+  th{background:transparent;color:var(--muted);font-weight:600}
+  tr:hover td{background:#fbfdff}
+
+  /* Products */
+  .actions{display:flex;gap:8px;align-items:center}
+  .btn{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:600}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(37,99,235,0.12)}
+  .pill{padding:6px 10px;border-radius:999px;font-weight:600;font-size:13px}
+
+  /* customers */
+  .avatar{width:36px;height:36;border-radius:8px;object-fit:cover;margin-right:10px}
+
+  /* analytics */
+  .chart-wrap{display:flex;gap:16px;align-items:center;flex-direction:column}
+  .canvas-box{width:100%;max-width:900px;height:260px;background:linear-gradient(180deg,#ffffff,#fbfdff);border-radius:10px;padding:12px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+
+  /* settings */
+  .form-row{display:flex;gap:12px;margin-bottom:12px}
+  .input{padding:10px;border-radius:8px;border:1px solid var(--border);background:transparent;width:100%}
+  label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+
+  /* Pages (sections) */
+  .page{display:none}
+  .page.active{display:block}
+
+  /* Login/Register panel */
+  .auth-wrap{
+    max-width:980px;margin:28px auto;padding:24px;background:linear-gradient(180deg,#fff,#fbfdff);border-radius:12px;border:1px solid var(--border);
+    display:flex;gap:20px;align-items:stretch;
+  }
+  .auth-left{flex:1;padding:20px;border-right:1px solid var(--border)}
+  .auth-right{flex:1;padding:20px}
+  .hero{font-weight:700;color:var(--accent);font-size:26px;margin-bottom:8px}
+  .muted{color:var(--muted);font-size:14px;margin-bottom:16px}
+  .form{display:flex;flex-direction:column;gap:12px}
+  .link{color:var(--accent);font-weight:600;cursor:pointer}
+
+  /* Modals */
+  .modal{
+    position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(10,15,25,0.35);z-index:50;
+  }
+  .modal.open{display:flex}
+  .modal .mw{width:100%;max-width:720px;background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--border)}
+
+  /* responsive */
+  @media (max-width:1000px){
+    .sidebar{display:none}
+    .toggle-btn{display:inline-flex}
+  }
+  @media (max-width:760px){
+    .auth-wrap{flex-direction:column}
+    .auth-left{border-right:none;border-bottom:1px solid var(--border)}
+    .grid{grid-template-columns:repeat(1,1fr)}
+  }
+  /* small helper styles */
+  .text-muted{color:var(--muted);font-size:13px}
+  .small{font-size:13px;color:var(--muted)}
+  .center{display:flex;align-items:center;justify-content:center}
+  .danger{color:var(--danger)}
+  .success{color:var(--success)}
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <div>RM1 CODERS</div>
+        <div class="small">Admin Dashboard</div>
+      </div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <a href="#" class="nav-link active" data-page="dashboard"><span class="ico">🏠</span> Dashboard</a>
+      <a href="#" class="nav-link" data-page="products"><span class="ico">📦</span> Products</a>
+      <a href="#" class="nav-link" data-page="orders"><span class="ico">🧾</span> Orders</a>
+      <a href="#" class="nav-link" data-page="customers"><span class="ico">👥</span> Customers</a>
+      <a href="#" class="nav-link" data-page="analytics"><span class="ico">📈</span> Analytics</a>
+      <a href="#" class="nav-link" data-page="settings"><span class="ico">⚙️</span> Settings</a>
+      <div class="small">Account</div>
+      <a href="#" id="profileLink" class="nav-link" data-page="profile"><span class="ico">🙍</span> Profile</a>
+      <a href="#" id="logoutBtn" class="nav-link"><span class="ico">🔒</span> Logout</a>
+    </nav>
+
+    <div class="bottom">
+      <div class="text-muted">Version 1.0</div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main" id="main">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:12px;width:100%">
+        <button class="toggle-btn" id="openSidebar" aria-label="open sidebar">☰</button>
+        <div class="search" style="flex:1">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="#94A3B8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="6" stroke="#94A3B8" stroke-width="1.6"/></svg>
+          <input id="searchInput" placeholder="Search orders, products, customers..." />
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="icon-btn" title="Notifications">🔔</button>
+        <button class="icon-btn" id="darkModeToggle" title="Toggle Dark Mode">🌙</button>
+
+
+        <div id="topProfile" class="profile" style="cursor:pointer">
+          <img id="topProfileImg" src="https://i.pravatar.cc/100" alt="admin" />
+          <div style="display:flex;flex-direction:column;align-items:flex-start">
+            <div id="topProfileName" style="font-weight:700">Guest</div>
+            <div class="small" id="topProfileRole">Not logged</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pages container -->
+    <section id="pages">
+      <!-- Dashboard Page -->
+      <section class="page active" id="dashboard">
+        <div class="grid">
+          <div class="card stats" style="grid-column:span 12">
+            <div class="stat">
+              <h4>Total Sales</h4>
+              <strong>$45,700</strong>
+              <div class="small">+8.4% from last month</div>
+            </div>
+            <div class="stat">
+              <h4>Total Orders</h4>
+              <strong>3,420</strong>
+              <div class="small">+2.1% from last month</div>
+            </div>
+            <div class="stat">
+              <h4>New Customers</h4>
+              <strong>1,130</strong>
+              <div class="small">+12.8% from last month</div>
+            </div>
+            <div class="stat">
+              <h4>Revenue</h4>
+              <strong>$128,400</strong>
+              <div class="small">+5.7% from last month</div>
+            </div>
+          </div>
+
+          <div class="card" style="grid-column: span 7">
+            <h3 style="margin:0 0 12px 0">Recent Orders</h3>
+            <div class="table-wrap">
+              <table id="ordersTable">
+                <thead>
+                  <tr><th>Order</th><th>Customer</th><th>Date</th><th>Total</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  <!-- Filled by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card" style="grid-column: span 5">
+            <h3 style="margin:0 0 12px 0">Top Products</h3>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <img src="https://picsum.photos/seed/p1/60" width="60" height="60" style="border-radius:8px;object-fit:cover" />
+                <div>
+                  <div style="font-weight:700">Leather Jacket</div>
+                  <div class="small">$120 · 240 sold</div>
+                </div>
+                <div style="margin-left:auto" class="pill">Hot</div>
+              </div>
+
+              <div style="display:flex;align-items:center;gap:12px">
+                <img src="https://picsum.photos/seed/p2/60" width="60" height="60" style="border-radius:8px;object-fit:cover" />
+                <div>
+                  <div style="font-weight:700">Smart Watch</div>
+                  <div class="small">$85 · 190 sold</div>
+                </div>
+                <div style="margin-left:auto" class="pill">Popular</div>
+              </div>
+
+              <div style="display:flex;align-items:center;gap:12px">
+                <img src="https://picsum.photos/seed/p3/60" width="60" height="60" style="border-radius:8px;object-fit:cover" />
+                <div>
+                  <div style="font-weight:700">Sneakers</div>
+                  <div class="small">$65 · 175 sold</div>
+                </div>
+                <div style="margin-left:auto" class="pill">Trending</div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="card" style="grid-column:span 12">
+            <h3 style="margin-bottom:10px">Quick Insights</h3>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <div style="flex:1;min-width:220px" class="card">
+                <h4 style="margin:0 0 8px 0">Conversion</h4>
+                <strong>3.4%</strong>
+                <div class="small">Avg across last 30 days</div>
+              </div>
+              <div style="flex:1;min-width:220px" class="card">
+                <h4 style="margin:0 0 8px 0">Avg Order Value</h4>
+                <strong>$58.2</strong>
+                <div class="small">Based on completed orders</div>
+              </div>
+              <div style="flex:1;min-width:220px" class="card">
+                <h4 style="margin:0 0 8px 0">Refund Rate</h4>
+                <strong>1.2%</strong>
+                <div class="small">Low and stable</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Products Page -->
+      <section class="page" id="products">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <h2 style="margin:0">Products</h2>
+          <div class="actions">
+            <input id="prodSearch" class="input" placeholder="Search product..." style="padding:8px;border-radius:8px;border:1px solid var(--border);width:260px" />
+            <button class="btn" id="openAddProduct">Add Product</button>
+            <button class="btn ghost" id="exportBtn">Export</button>
+          </div>
+        </div>
+
+        <div class="card table-wrap">
+          <table id="productsTable">
+            <thead><tr><th>Product</th><th>Price</th><th>Stock</th><th>Category</th><th>Actions</th></tr></thead>
+            <tbody><!-- JS --></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Orders Page -->
+      <section class="page" id="orders">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <h2 style="margin:0">Orders</h2>
+          <div class="small">Showing recent orders</div>
+        </div>
+
+        <div class="card table-wrap">
+          <table id="ordersFullTable">
+            <thead><tr><th>Order</th><th>Customer</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th></tr></thead>
+            <tbody><!-- JS --></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Customers Page -->
+      <section class="page" id="customers">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <h2 style="margin:0">Customers</h2>
+          <div class="small">Manage customers</div>
+        </div>
+        <div class="card table-wrap">
+          <table id="customersTable">
+            <thead><tr><th>Customer</th><th>Email</th><th>Orders</th><th>Joined</th><th>Actions</th></tr></thead>
+            <tbody><!-- JS --></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Analytics -->
+      <section class="page" id="analytics">
+        <h2 style="margin-top:0">Analytics</h2>
+        <div class="card chart-wrap">
+          <div class="canvas-box">
+            <canvas id="salesChart" width="820" height="240"></canvas>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+            <div class="card small"><strong>Sessions</strong><div class="small">12,345</div></div>
+            <div class="card small"><strong>Bounce</strong><div class="small">34.7%</div></div>
+            <div class="card small"><strong>Avg Duration</strong><div class="small">3m 12s</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section class="page" id="settings">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <h2 style="margin:0">Settings</h2>
+          <div class="small">Update profile & account</div>
+        </div>
+
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+          <div class="card" style="flex:1;min-width:300px">
+            <h3>Profile</h3>
+            <div class="form">
+              <label>Name <input id="setName" class="input" /></label>
+              <label>Email <input id="setEmail" class="input" /></label>
+              <label>Role <input id="setRole" class="input" /></label>
+              <div style="display:flex;gap:8px">
+                <button class="btn" id="saveProfile">Save</button>
+                <button class="btn ghost" id="resetProfile">Reset</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="flex:1;min-width:300px">
+            <h3>Change Password</h3>
+            <div class="form">
+              <label>Current Password <input id="curPass" type="password" class="input" /></label>
+              <label>New Password <input id="newPass" type="password" class="input" /></label>
+              <label>Confirm Password <input id="confPass" type="password" class="input" /></label>
+              <div style="display:flex;gap:8px">
+                <button class="btn" id="changePass">Change</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile (simple) -->
+      <section class="page" id="profile">
+        <div style="display:flex;gap:18px;align-items:center;margin-bottom:16px">
+          <img id="profilePageImg" src="https://i.pravatar.cc/120" width="120" height="120" style="border-radius:12px;object-fit:cover" />
+          <div>
+            <h2 id="profilePageName">Guest</h2>
+            <div class="small" id="profilePageEmail">Not logged in</div>
+            <div style="margin-top:8px"><span class="pill">Admin</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Activity</h3>
+          <div class="small">No activity to show in static demo.</div>
+        </div>
+      </section>
+
+      <!-- Auth (Login/Register) page - single page toggle -->
+      <section class="page" id="auth">
+        <div class="auth-wrap">
+          <div class="auth-left">
+            <div class="hero">Welcome back!</div>
+            <div class="muted">Login to access the admin dashboard — this is a static demo. Use any email to register and login.</div>
+
+            <form id="loginForm" class="form" onsubmit="return false;">
+              <label>Email <input id="loginEmail" class="input" required /></label>
+              <label>Password <input id="loginPassword" type="password" class="input" required /></label>
+              <div style="display:flex;gap:8px">
+                <button class="btn" id="loginBtn">Login</button>
+                <button class="btn ghost" id="goRegister">Register</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="auth-right">
+            <div class="hero">Create account</div>
+            <div class="muted">Quickly register an admin account for demo purposes.</div>
+
+            <form id="registerForm" class="form" onsubmit="return false;">
+              <label>Name <input id="regName" class="input" required /></label>
+              <label>Email <input id="regEmail" class="input" required /></label>
+              <label>Password <input id="regPassword" type="password" class="input" required /></label>
+              <div style="display:flex;gap:8px">
+                <button class="btn" id="registerBtn">Register</button>
+                <button class="btn ghost" id="goLogin">Login</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+    </section>
+  </main>
+</div>
+
+<!-- Modal: Add/Edit Product -->
+<div id="productModal" class="modal" aria-hidden="true">
+  <div class="mw">
+    <h3 id="modalTitle">Add Product</h3>
+    <div style="margin-top:8px" class="form">
+      <label>Title <input id="pTitle" class="input" /></label>
+      <label>Price <input id="pPrice" class="input" /></label>
+      <label>Stock <input id="pStock" class="input" /></label>
+      <label>Category <input id="pCat" class="input" /></label>
+      <label>Image URL <input id="pImg" class="input" placeholder="https://..." /></label>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn" id="saveProduct">Save</button>
+        <button class="btn ghost" id="closeProductModal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* -------------------------
+   Static Demo Data & State
+   ------------------------- */
+const state = {
+  user: null, // {name,email,role,avatar}
+  products: [
+    {id:1,title:'Leather Jacket',price:120,stock:24,category:'Clothing',img:'https://picsum.photos/seed/p1/80'},
+    {id:2,title:'Smart Watch',price:85,stock:50,category:'Electronics',img:'https://picsum.photos/seed/p2/80'},
+    {id:3,title:'Running Sneakers',price:65,stock:12,category:'Footwear',img:'https://picsum.photos/seed/p3/80'},
+    {id:4,title:'Wireless Headphones',price:99,stock:30,category:'Electronics',img:'https://picsum.photos/seed/p4/80'},
+  ],
+  orders: [
+    {id:1001,customer:'John Doe',date:'2025-10-03',total:250,status:'Completed',items:3},
+    {id:1002,customer:'Emma Watson',date:'2025-10-04',total:520,status:'Pending',items:5},
+    {id:1003,customer:'Michael Lee',date:'2025-10-05',total:1200,status:'Cancelled',items:8},
+    {id:1004,customer:'Priya Sharma',date:'2025-10-06',total:98,status:'Processing',items:1},
+  ],
+  customers: [
+    {name:'John Doe',email:'john@example.com',orders:4,joined:'2024-08-12'},
+    {name:'Emma Watson',email:'emma@example.com',orders:6,joined:'2024-12-01'},
+    {name:'Michael Lee',email:'michael@example.com',orders:2,joined:'2025-02-24'},
+  ],
+  editingProductId: null,
+};
+
+/* -------------------------
+   Utility / DOM helpers
+   ------------------------- */
+const $ = (sel, ctx=document) => ctx.querySelector(sel);
+const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+
+/* -------------------------
+   Page routing & nav
+   ------------------------- */
+function showPage(id){
+  // hide all pages
+  $$('.page').forEach(p => p.classList.remove('active'));
+  $('#'+id).classList.add('active');
+  // active nav
+  $$('.nav-link').forEach(a => a.classList.remove('active'));
+  $$('.nav-link[data-page="'+id+'"]').forEach(a => a.classList.add('active'));
+}
+$$('.nav-link').forEach(a => {
+  a.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const p = a.dataset.page;
+    if(p==='logout'){
+      logout();
+    } else {
+      if(p) showPage(p);
+    }
+    // close sidebar on small screen
+    if(window.innerWidth < 1000) document.getElementById('sidebar').style.display='none';
+  });
+});
+
+/* Sidebar toggle for small screens */
+$('#openSidebar').addEventListener('click', ()=>{
+  const sb = $('#sidebar');
+  sb.style.display = (sb.style.display === 'block') ? 'none' : 'block';
+});
+
+/* -------------------------
+   Render functions
+   ------------------------- */
+function renderOrdersTable(){
+  const tbody = $('#ordersTable tbody');
+  tbody.innerHTML = '';
+  state.orders.slice(0,6).forEach(o => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>#${o.id}</td>
+      <td>${o.customer}</td>
+      <td>${new Date(o.date).toLocaleDateString()}</td>
+      <td>$${o.total}</td>
+      <td style="color:${statusColor(o.status)}">${o.status}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+  // full orders
+  const ordersFull = $('#ordersFullTable tbody');
+  ordersFull.innerHTML = '';
+  state.orders.forEach(o => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>#${o.id}</td>
+      <td>${o.customer}</td>
+      <td>${new Date(o.date).toLocaleDateString()}</td>
+      <td>${o.items}</td>
+      <td>$${o.total}</td>
+      <td style="color:${statusColor(o.status)}">${o.status}</td>
+    `;
+    ordersFull.appendChild(tr);
+  });
+}
+
+function statusColor(s){
+  if(s.toLowerCase().includes('complete')) return 'green';
+  if(s.toLowerCase().includes('pending') || s.toLowerCase().includes('processing')) return 'orange';
+  if(s.toLowerCase().includes('cancel')) return 'red';
+  return 'black';
+}
+
+function renderProducts(){
+  const t = $('#productsTable tbody');
+  t.innerHTML = '';
+  state.products.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="display:flex;align-items:center">
+        <img src="${p.img}" width="48" height="48" style="border-radius:8px;object-fit:cover;margin-right:12px" />
+        <div>
+          <div style="font-weight:700">${p.title}</div>
+          <div class="small">${p.category}</div>
+        </div>
+      </td>
+      <td>$${p.price}</td>
+      <td>${p.stock}</td>
+      <td>${p.category}</td>
+      <td>
+        <div style="display:flex;gap:8px">
+          <button class="btn ghost" onclick="editProduct(${p.id})">Edit</button>
+          <button class="btn" style="background:#ef4444" onclick="deleteProduct(${p.id})">Delete</button>
+        </div>
+      </td>
+    `;
+    t.appendChild(tr);
+  });
+}
+
+function renderCustomers(){
+  const t = $('#customersTable tbody');
+  t.innerHTML = '';
+  state.customers.forEach(c => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="display:flex;align-items:center">
+        <img class="avatar" src="https://i.pravatar.cc/seed/${encodeURIComponent(c.email)}/60" />
+        <div>
+          <div style="font-weight:700">${c.name}</div>
+          <div class="small">${c.email}</div>
+        </div>
+      </td>
+      <td>${c.email}</td>
+      <td>${c.orders}</td>
+      <td>${c.joined}</td>
+      <td><button class="btn ghost" onclick="messageCustomer('${c.email}')">Message</button></td>
+    `;
+    t.appendChild(tr);
+  });
+}
+
+/* -------------------------
+   Product modal & CRUD (static)
+   ------------------------- */
+const productModal = $('#productModal');
+$('#openAddProduct').addEventListener('click', () => openProductModal());
+$('#closeProductModal').addEventListener('click', closeProductModal);
+function openProductModal(){
+  state.editingProductId = null;
+  $('#modalTitle').textContent = 'Add Product';
+  $('#pTitle').value='';$('#pPrice').value='';$('#pStock').value='';$('#pCat').value='';$('#pImg').value='';
+  productModal.classList.add('open');
+}
+function closeProductModal(){
+  productModal.classList.remove('open');
+}
+window.saveProduct = function(){
+  const title = $('#pTitle').value.trim();
+  const price = parseFloat($('#pPrice').value) || 0;
+  const stock = parseInt($('#pStock').value) || 0;
+  const cat = $('#pCat').value.trim() || 'General';
+  const img = $('#pImg').value.trim() || 'https://picsum.photos/seed/p'+(Math.random()*1000|0)+'/80';
+  if(!title){ alert('Please enter title'); return; }
+  if(state.editingProductId){
+    const p = state.products.find(x=>x.id===state.editingProductId);
+    p.title=title;p.price=price;p.stock=stock;p.category=cat;p.img=img;
+    state.editingProductId = null;
+  } else {
+    const id = (state.products.reduce((a,b)=>Math.max(a,b.id),0) || 0) + 1;
+    state.products.unshift({id,title,price,stock,category:cat,img});
+  }
+  closeProductModal();
+  renderProducts();
+}
+$('#saveProduct').addEventListener('click', saveProduct);
+
+window.editProduct = function(id){
+  const p = state.products.find(x=>x.id===id);
+  if(!p) return;
+  state.editingProductId = id;
+  $('#modalTitle').textContent = 'Edit Product';
+  $('#pTitle').value = p.title;
+  $('#pPrice').value = p.price;
+  $('#pStock').value = p.stock;
+  $('#pCat').value = p.category;
+  $('#pImg').value = p.img;
+  productModal.classList.add('open');
+}
+
+window.deleteProduct = function(id){
+  if(!confirm('Delete product?')) return;
+  state.products = state.products.filter(x=>x.id!==id);
+  renderProducts();
+}
+
+/* -------------------------
+   Customers actions
+   ------------------------- */
+window.messageCustomer = function(email){
+  alert('Pretend sending message to ' + email + ' (static demo).');
+}
+
+/* -------------------------
+   Search & Filters
+   ------------------------- */
+$('#searchInput').addEventListener('input', (e)=>{
+  const q = e.target.value.toLowerCase().trim();
+  // filter products table
+  const filtered = state.products.filter(p => p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+  // simple render
+  const tbody = $('#productsTable tbody');
+  tbody.innerHTML = '';
+  filtered.forEach(p=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="display:flex;align-items:center">
+        <img src="${p.img}" width="48" height="48" style="border-radius:8px;object-fit:cover;margin-right:12px" />
+        <div>
+          <div style="font-weight:700">${p.title}</div>
+          <div class="small">${p.category}</div>
+        </div>
+      </td>
+      <td>$${p.price}</td>
+      <td>${p.stock}</td>
+      <td>${p.category}</td>
+      <td>
+        <div style="display:flex;gap:8px">
+          <button class="btn ghost" onclick="editProduct(${p.id})">Edit</button>
+          <button class="btn" style="background:#ef4444" onclick="deleteProduct(${p.id})">Delete</button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+});
+
+/* -------------------------
+   Auth: register/login (localStorage simulated)
+   ------------------------- */
+function saveUserToStorage(u){ localStorage.setItem('shopadmin_user', JSON.stringify(u)); }
+function loadUserFromStorage(){ try { return JSON.parse(localStorage.getItem('shopadmin_user')); } catch(e){ return null; } }
+function logout(){
+  localStorage.removeItem('shopadmin_user');
+  state.user = null;
+  updateUIForUser();
+  showPage('auth');
+}
+$('#goRegister').addEventListener('click', (e)=>{ e.preventDefault(); showPage('auth'); });
+$('#goLogin').addEventListener('click', (e)=>{ e.preventDefault(); showPage('auth'); });
+
+$('#registerBtn').addEventListener('click', ()=>{
+  const name = $('#regName').value.trim();
+  const email = $('#regEmail').value.trim();
+  const pass = $('#regPassword').value;
+  if(!name||!email||!pass){ alert('Please fill'); return; }
+  const u = {name,email,role:'Admin',avatar:'https://i.pravatar.cc/100?u='+encodeURIComponent(email)};
+  saveUserToStorage(u);
+  state.user = u;
+  updateUIForUser();
+  alert('Registered (static demo). You are now logged in.');
+  showPage('dashboard');
+});
+
+$('#loginBtn').addEventListener('click', ()=>{
+  const email = $('#loginEmail').value.trim();
+  const pass = $('#loginPassword').value;
+  // static demo: accept if localStorage has user or accept any email and create a demo user
+  let stored = loadUserFromStorage();
+  if(stored && stored.email === email){
+    state.user = stored;
+  } else {
+    state.user = {name: email.split('@')[0], email, role:'Admin', avatar:'https://i.pravatar.cc/100?u=' + encodeURIComponent(email)};
+    saveUserToStorage(state.user);
+  }
+  updateUIForUser();
+  alert('Logged in as ' + state.user.email + ' (static demo).');
+  showPage('dashboard');
+});
+
+/* -------------------------
+   Profile & Settings handlers
+   ------------------------- */
+function updateUIForUser(){
+  if(state.user){
+    $('#topProfileName').textContent = state.user.name;
+    $('#topProfileRole').textContent = state.user.role || 'Admin';
+    $('#topProfileImg').src = state.user.avatar;
+    $('#profilePageName').textContent = state.user.name;
+    $('#profilePageEmail').textContent = state.user.email;
+    $('#profilePageImg').src = state.user.avatar;
+    $('#profileLink').style.display = 'block';
+    $('#logoutBtn').style.display = 'block';
+    // fill settings
+    $('#setName').value = state.user.name;
+    $('#setEmail').value = state.user.email;
+    $('#setRole').value = state.user.role || 'Admin';
+  } else {
+    $('#topProfileName').textContent = 'Guest';
+    $('#topProfileRole').textContent = 'Not logged';
+    $('#topProfileImg').src = 'https://i.pravatar.cc/100';
+    $('#profilePageName').textContent = 'Guest';
+    $('#profilePageEmail').textContent = 'Not logged in';
+    $('#profileLink').style.display = 'none';
+    $('#logoutBtn').style.display = 'none';
+  }
+}
+
+$('#saveProfile').addEventListener('click', ()=>{
+  const name = $('#setName').value.trim();
+  const email = $('#setEmail').value.trim();
+  const role = $('#setRole').value.trim();
+  if(!name||!email){ alert('Please fill name and email'); return; }
+  state.user = Object.assign({}, state.user || {}, {name,email,role,avatar:'https://i.pravatar.cc/100?u='+encodeURIComponent(email)});
+  saveUserToStorage(state.user);
+  updateUIForUser();
+  alert('Profile saved (local only).');
+});
+
+$('#resetProfile').addEventListener('click', ()=>{
+  if(state.user){
+    $('#setName').value = state.user.name;
+    $('#setEmail').value = state.user.email;
+    $('#setRole').value = state.user.role;
+  }
+});
+
+$('#changePass').addEventListener('click', ()=>{
+  const a = $('#curPass').value, b = $('#newPass').value, c = $('#confPass').value;
+  if(!b || b !== c){ alert('New passwords must match'); return; }
+  // static demo - do nothing
+  alert('Password changed (static demo).');
+  $('#curPass').value='';$('#newPass').value='';$('#confPass').value='';
+});
+
+/* -------------------------
+   Search / export
+   ------------------------- */
+$('#prodSearch').addEventListener('input', (e)=>{
+  const q = e.target.value.toLowerCase().trim();
+  const filtered = state.products.filter(p => p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+  // reuse render logic to show filtered
+  const t = $('#productsTable tbody');
+  t.innerHTML = '';
+  filtered.forEach(p => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="display:flex;align-items:center">
+        <img src="${p.img}" width="48" height="48" style="border-radius:8px;object-fit:cover;margin-right:12px" />
+        <div>
+          <div style="font-weight:700">${p.title}</div>
+          <div class="small">${p.category}</div>
+        </div>
+      </td>
+      <td>$${p.price}</td>
+      <td>${p.stock}</td>
+      <td>${p.category}</td>
+      <td>
+        <div style="display:flex;gap:8px">
+          <button class="btn ghost" onclick="editProduct(${p.id})">Edit</button>
+          <button class="btn" style="background:#ef4444" onclick="deleteProduct(${p.id})">Delete</button>
+        </div>
+      </td>
+    `;
+    t.appendChild(tr);
+  });
+});
+
+$('#exportBtn').addEventListener('click', ()=>{
+  const csv = [
+    ['ID','Title','Price','Stock','Category'],
+    ...state.products.map(p => [p.id,p.title,p.price,p.stock,p.category])
+  ].map(r => r.map(c => `"${(''+c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='products.csv'; a.click(); URL.revokeObjectURL(url);
+});
+
+/* -------------------------
+   Render initial data
+   ------------------------- */
+function init(){
+  // if user exists in storage, load
+  const saved = loadUserFromStorage();
+  if(saved){
+    state.user = saved;
+    updateUIForUser();
+  } else {
+    showPage('auth');
+  }
+  renderProducts();
+  renderOrdersTable();
+  renderCustomers();
+  renderOrdersTable();
+  drawSalesChart();
+}
+init();
+
+/* -------------------------
+   Simple canvas chart (static)
+   ------------------------- */
+function drawSalesChart(){
+  const canvas = document.getElementById('salesChart');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0,0,w,h);
+  const months = ['Apr','May','Jun','Jul','Aug','Sep','Oct'];
+  const data = [4200,5200,4800,6100,7200,6800,8300];
+  // draw grid
+  ctx.strokeStyle = '#eef6ff';
+  ctx.lineWidth = 1;
+  for(let i=0;i<6;i++){
+    const y = (h/6)*i + 20;
+    ctx.beginPath(); ctx.moveTo(40,y); ctx.lineTo(w-20,y); ctx.stroke();
+  }
+  // draw axes
+  ctx.strokeStyle = '#cfe8ff';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(40,20); ctx.lineTo(40,h-30); ctx.lineTo(w-20,h-30); ctx.stroke();
+
+  // scale
+  const max = Math.max(...data)*1.1;
+  const plotW = w - 80; const plotH = h - 70;
+  // draw area/line
+  ctx.beginPath();
+  data.forEach((v,i)=>{
+    const x = 40 + (plotW/(data.length-1))*i;
+    const y = 20 + plotH - (v/max)*plotH;
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.strokeStyle = '#60a5fa'; ctx.lineWidth=3; ctx.stroke();
+  // fill area
+  ctx.lineTo(w-20,h-30);
+  ctx.lineTo(40,h-30);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(96,165,250,0.12)'; ctx.fill();
+
+  // labels
+  ctx.fillStyle = '#64748b'; ctx.font = '12px Poppins';
+  data.forEach((v,i)=>{
+    const x = 40 + (plotW/(data.length-1))*i;
+    const y = 20 + plotH - (v/max)*plotH;
+    ctx.fillText(months[i], x-10, h-10);
+    ctx.fillText('$' + v, x-10, y-8);
+  });
+}
+
+/* -------------------------
+   Misc helpers
+   ------------------------- */
+window.addEventListener('resize', ()=>{
+  if(window.innerWidth >= 1000) document.getElementById('sidebar').style.display='flex';
+  drawSalesChart();
+});
+drawSalesChart();
+
+/* Allow nav links to switch pages */
+$$('.nav-link').forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const page = a.dataset.page;
+    if(page){
+      showPage(page);
+    }
+  });
+});
+
+/* Clicking top profile opens profile page */
+$('#topProfile').addEventListener('click', ()=> showPage('profile'));
+
+/* clicking logout link */
+$('#logoutBtn').addEventListener('click', (e)=>{
+  e.preventDefault(); logout();
+});
+
+/* Clicking profile link */
+$('#profileLink').addEventListener('click', (e)=>{ e.preventDefault(); showPage('profile'); });
+
+/* Initial active show */
+if(!state.user) showPage('auth'); else showPage('dashboard');
+
+/* Small accessibility: close modal on Escape */
+window.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape') {
+    closeProductModal();
+  }
+});
+
+
+
+const darkBtn = $('#darkModeToggle');
+
+function updateDarkIcon(){
+  darkBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+}
+
+// Initialize from localStorage
+if(localStorage.getItem('darkMode') === 'true'){
+  document.body.classList.add('dark');
+}
+updateDarkIcon();
+
+darkBtn.addEventListener('click', ()=>{
+  document.body.classList.toggle('dark');
+  localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+  updateDarkIcon();
+});
+
+
+</script>
+</body>
+</html>
