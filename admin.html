@@ -864,9 +864,9 @@ function loadUserFromStorage(){ try { return JSON.parse(localStorage.getItem('sh
 function logout(){
   localStorage.removeItem('shopadmin_user');
   state.user = null;
-  updateUIForUser();
-  showPage('auth');
+  window.location.href = 'index.html';
 }
+
 $('#goRegister').addEventListener('click', (e)=>{ e.preventDefault(); showPage('auth'); });
 $('#goLogin').addEventListener('click', (e)=>{ e.preventDefault(); showPage('auth'); });
 
