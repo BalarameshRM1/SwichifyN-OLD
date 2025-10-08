@@ -486,18 +486,230 @@ body.dark .modal .mw {
 
       <!-- Analytics -->
       <section class="page" id="analytics">
-        <h2 style="margin-top:0">Analytics</h2>
-        <div class="card chart-wrap">
-          <div class="canvas-box">
-            <canvas id="salesChart" width="820" height="240"></canvas>
-          </div>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
-            <div class="card small"><strong>Sessions</strong><div class="small">12,345</div></div>
-            <div class="card small"><strong>Bounce</strong><div class="small">34.7%</div></div>
-            <div class="card small"><strong>Avg Duration</strong><div class="small">3m 12s</div></div>
-          </div>
-        </div>
-      </section>
+  <h2 style="margin-top:0">Admin Analytics Dashboard</h2>
+  <div class="card filters" style="margin-top:24px;display:flex;flex-wrap:wrap;gap:12px;">
+    <strong>Filters:</strong>
+    <select>
+      <option value="">Select Zone</option>
+      <option>Zone 1</option>
+      <option>Zone 2</option>
+      <option>Zone 3</option>
+    </select>
+    <select>
+      <option value="">Select Date Range</option>
+      <option>Today</option>
+      <option>This Week</option>
+      <option>This Month</option>
+      <option>Custom Range</option>
+    </select>
+    <select>
+      <option value="">Select Staff</option>
+      <option>Staff 1</option>
+      <option>Staff 2</option>
+    </select>
+  </div>
+
+  
+  <div class="card chart-wrap">
+    <div class="kpi-cards" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+      <div class="card small">
+        <strong>Total Users</strong>
+        <div class="small">12,345</div>
+      </div>
+      <div class="card small">
+        <strong>Active Users</strong>
+        <div class="small">8,912</div>
+      </div>
+      <div class="card small">
+        <strong>Complaints</strong>
+        <div class="small">1,234</div>
+      </div>
+      <div class="card small">
+        <strong>Resolved</strong>
+        <div class="small">1,000</div>
+      </div>
+      <div class="card small">
+        <strong>Pending</strong>
+        <div class="small">234</div>
+      </div>
+      <div class="card small">
+        <strong>Waste Collected</strong>
+        <div class="small">5,432 kg</div>
+      </div>
+      <div class="card small">
+        <strong>Avg Response Time</strong>
+        <div class="small">2h 15m</div>
+      </div>
+      <div class="card small">
+        <strong>Cleanliness Index</strong>
+        <div class="small">85%</div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="charts" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
+
+  
+  <div class="card chart large" style="flex:1 1 45%;min-width:300px;">
+    <strong>Zone-wise Cleanliness</strong>
+    <div class="bar-chart heat-map">
+      <div class="bar" style="height:90%; background:#4caf50;"><span>Zone 1</span></div>
+      <div class="bar" style="height:70%; background:#8bc34a;"><span>Zone 2</span></div>
+      <div class="bar" style="height:50%; background:#ffc107;"><span>Zone 3</span></div>
+      <div class="bar" style="height:30%; background:#f44336;"><span>Zone 4</span></div>
+    </div>
+  </div>
+
+  <!-- Complaints Trend (Line Chart) -->
+  <div class="card chart large" style="flex:1 1 45%;min-width:300px;">
+    <strong>Complaints Trend</strong>
+    <div class="line-chart">
+      <div class="line">
+        <div style="height:20%;"></div>
+        <div style="height:35%;"></div>
+        <div style="height:50%;"></div>
+        <div style="height:40%;"></div>
+        <div style="height:60%;"></div>
+        <div style="height:55%;"></div>
+        <div style="height:70%;"></div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="card chart large" style="flex:1 1 45%;min-width:300px;">
+    <strong>Waste Collection Trend</strong>
+    <div class="line-chart">
+      <div class="line">
+        <div style="height:30%;"></div>
+        <div style="height:45%;"></div>
+        <div style="height:55%;"></div>
+        <div style="height:50%;"></div>
+        <div style="height:65%;"></div>
+        <div style="height:60%;"></div>
+        <div style="height:80%;"></div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="card chart large" style="flex:1 1 45%;min-width:300px;">
+    <strong>Staff Performance</strong>
+    <div class="ranking-chart">
+      <div class="bar" style="width:90%; background:#4caf50;">Staff 1</div>
+      <div class="bar" style="width:70%; background:#2196f3;">Staff 2</div>
+      <div class="bar" style="width:60%; background:#ff9800;">Staff 3</div>
+      <div class="bar" style="width:50%; background:#f44336;">Staff 4</div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+  .chart { padding:16px; border-radius:12px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+  .chart strong { display:block; margin-bottom:12px; font-size:16px; }
+
+ 
+  .bar-chart { display:flex; align-items:flex-end; justify-content:space-around; height:200px; gap:8px; }
+  .bar-chart .bar { width:20%; border-radius:6px 6px 0 0; display:flex; align-items:flex-end; justify-content:center; position:relative; }
+  .bar-chart .bar span { position:absolute; bottom:-20px; font-size:12px; color:#333; }
+
+  
+  .line-chart { height:200px; display:flex; align-items:flex-end; gap:6px; padding:0 8px; background:#f0f0f0; border-radius:8px; }
+  .line-chart .line { display:flex; align-items:flex-end; gap:6px; width:100%; }
+  .line-chart .line div { width:14%; background:#2196f3; border-radius:4px; }
+
+  
+  .ranking-chart { display:flex; flex-direction:column; gap:8px; }
+  .ranking-chart .bar { height:30px; color:#fff; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; border-radius:6px; font-weight:bold; }
+</style>
+
+
+  <!-- Real-Time / Map Section -->
+<div class="card map-section" style="margin-top:24px;">
+  <strong>Geo-Mapped Insights</strong>
+  <div class="map-container">
+    <!-- Zones -->
+    <div class="zone zone1">Zone 1</div>
+    <div class="zone zone2">Zone 2</div>
+    <div class="zone zone3">Zone 3</div>
+    <div class="zone zone4">Zone 4</div>
+
+    <!-- Bins -->
+    <div class="bin" style="top:20%; left:15%;"></div>
+    <div class="bin" style="top:50%; left:60%;"></div>
+    <div class="bin" style="top:70%; left:30%;"></div>
+
+    <!-- Complaints -->
+    <div class="complaint" style="top:25%; left:40%;"></div>
+    <div class="complaint" style="top:60%; left:70%;"></div>
+    <div class="complaint" style="top:80%; left:20%;"></div>
+  </div>
+</div>
+
+<style>
+.map-container {
+  position: relative;
+  height:300px;
+  background: #e0f7fa;
+  border-radius:12px;
+  margin-top:16px;
+  overflow:hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+
+.zone {
+  position: absolute;
+  padding:4px 8px;
+  font-size:12px;
+  color:#fff;
+  font-weight:bold;
+  border-radius:4px;
+  text-align:center;
+}
+.zone1 { top:5%; left:5%; background:#4caf50; }
+.zone2 { top:5%; right:5%; background:#2196f3; }
+.zone3 { bottom:5%; left:5%; background:#ffc107; }
+.zone4 { bottom:5%; right:5%; background:#f44336; }
+
+
+.bin {
+  position: absolute;
+  width:16px;
+  height:16px;
+  background:#795548;
+  border-radius:50%;
+  border:2px solid #fff;
+}
+
+
+.complaint {
+  position: absolute;
+  width:16px;
+  height:16px;
+  background:#f44336;
+  border-radius:50%;
+  border:2px solid #fff;
+}
+</style>
+
+
+  
+  
+</section>
+
+<style>
+  .page { padding: 24px; font-family: Arial, sans-serif; }
+  .card { background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .small { font-size: 14px; margin-top: 4px; color: #555; }
+  .kpi-cards .card { flex: 1 1 150px; min-width: 120px; text-align:center; }
+  .charts .chart-placeholder { height:200px; background:#f0f0f0; border-radius:8px; display:flex;justify-content:center;align-items:center;color:#999; }
+  .map-section .chart-placeholder { background:#e0f7fa; display:flex;justify-content:center;align-items:center; color:#00796b; }
+  .filters select { padding:6px 10px; border-radius:6px; border:1px solid #ccc; }
+</style>
+
 
       <!-- Settings -->
       <section class="page" id="settings">
